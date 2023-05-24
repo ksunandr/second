@@ -1,28 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import { ErorrText } from './components/ErorrText';
+import { Loader } from './components/Loader';
 import { Product } from './components/Product'
-// import { products } from './components/data/products';
-import axios from 'axios';
-import { IProduct } from './models';
-
+import { useProducts } from './hooks/products';
 
 function App() {
 
-  const [products, setProducts] = useState<IProduct[]>([])
-  async function fetchProducts() {
-    const response = await axios.get<IProduct[]>('https://fakestoreapi.com/products?limit=6')
-    setProducts((response).data)
-    console.log(response)
-  }
-
-  useEffect(() => {
-    fetchProducts()
-    console.log("useEffect")
-  }, [])
+  const { loading, error, products } = useProducts()
 
   return (
     <div className="container mx-auto max-w-2xl pt-5">
+      {loading && <Loader />}
+      {error && <ErorrText error = {error}/>}
+
       {products.map(p => <Product product={p} key={p.id} />)}
-      {/* {products.map((p, index) => <Product product = {p} key={index} />)} */}
+      {/* {products.map((p, index) => <Product product = {p} key={index} />)} */} {/* another way to add key - using index*/}
     </div>
   )
 }

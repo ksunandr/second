@@ -1,5 +1,7 @@
 import { IProduct } from "../../models";
 
+/*DB stub not used now - await axios.get<IProduct[]>('https://fakestoreapi.com/products?limit=6') is used instead*/
+
 export const products: IProduct[] = [
     {
         "id": 1,
